@@ -20,7 +20,7 @@ export class TemaService {
   }
 
   getByIdTema (id: number): Observable<TemaModel> {
-    return this.http.get<TemaModel>(`https://viniciuspacheco.herokuapp.com/${id}`, this.token)
+    return this.http.get<TemaModel>(`https://viniciuspacheco.herokuapp.com/tema/${id}`, this.token)
   }
 
   postTema (tema: TemaModel): Observable<TemaModel> {
