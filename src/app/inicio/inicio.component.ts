@@ -1,4 +1,10 @@
-import { environment } from './../../environments/environment.prod';
+import { environment } from 'src/environments/environment.prod';
+import { AuthService } from './../service/auth.service';
+import { UsuarioModel } from './../model/UsuarioModel';
+import { TemaModel } from './../model/TemaModel';
+import { TemaService } from './../service/tema.service';
+import { PostagemService } from './../service/postagem.service';
+import { PostagemModel } from './../model/PostagemModel';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -9,8 +15,21 @@ import { Router } from '@angular/router';
 })
 export class InicioComponent implements OnInit {
 
+  listaPostagens: PostagemModel[]
+  postagem: PostagemModel = new PostagemModel()
+
+  tema: TemaModel = new TemaModel
+  listaTemas: TemaModel[]
+  idTema: number
+
+  user: UsuarioModel = new UsuarioModel
+  idUser = environment.id
+
   constructor(
-    private router : Router
+    private router : Router,
+    private postagemService: PostagemService,
+    private temaService: TemaService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -18,5 +37,47 @@ export class InicioComponent implements OnInit {
       alert('Sua seção expirou, faça o login novamente!')
       this.router.navigate(['/entrar'])
     }
+
+    this.getAllTemas()
+    this.getAllPostagens()
+  }
+
+  getAllTemas () {
+    this.temaService.getAllTema().subscribe((resp: TemaModel[])=>{
+      this.listaTemas = resp
+    })
+  }
+
+  findByIdTema () {
+    return this.temaService.getByIdTema(this.idTema).subscribe((resp: TemaModel)=>{
+      this.tema = resp
+    })
+  }
+
+  getAllPostagens () {
+    this.postagemService.getAllPortagens().subscribe((resp: PostagemModel[])=>{
+      this.listaPostagens = resp
+    })
+  }
+
+  findByIdUser () {
+    this.authService.getByIdUser(this.idUser).subscribe((resp: UsuarioModel)=>{
+      this.user = resp
+    })
+  }
+
+  publicar () {
+    this.tema.id = this.idTema
+    this.postagem.tema = this.tema
+
+    this.user.id = this.idUser
+    this.postagem.usuario = this.user
+
+    this.postagemService.postPostagem(this.postagem).subscribe((resp: PostagemModel)=>{
+      this.postagem = resp
+      alert('Postagem realizada com sucesso!')
+      this.postagem = new PostagemModel()
+      this.getAllPostagens()
+    })
   }
 }
