@@ -15,14 +15,24 @@ export class PostagemService {
     headers: new HttpHeaders().set('Authorization', environment.token)
   }
 
-  getAllPortagens (): Observable<PostagemModel[]> {
+  getAllPostagens (): Observable<PostagemModel[]> {
     return this.http.get<PostagemModel[]>(environment.urlBackEnd +'postagem', this.token)
+  }
+
+  getByIdPostagem (id: number): Observable<PostagemModel> {
+    return this.http.get<PostagemModel>(environment.urlBackEnd +`postagem/${id}`, this.token)
   }
 
   postPostagem (postagem: PostagemModel): Observable<PostagemModel> {
     return this.http.post<PostagemModel>(environment.urlBackEnd +'postagem', postagem, this.token)
   }
 
+  putPostagem (postagem: PostagemModel): Observable<PostagemModel> {
+    return this.http.put<PostagemModel>(environment.urlBackEnd +'postagem', postagem, this.token)
+  }
 
+  deletePostagem (id: number) {
+    return this.http.delete(environment.urlBackEnd +`postagem/${id}`, this.token)
+  }
 
 }

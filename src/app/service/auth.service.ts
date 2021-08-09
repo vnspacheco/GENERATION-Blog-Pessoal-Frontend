@@ -37,4 +37,9 @@ export class AuthService {
 
     return ok
   }
+
+  alterar(user: UsuarioModel): Observable<UsuarioModel>{
+    return this.http.put<UsuarioModel>(environment.urlBackEnd + 'usuarios/alterar', user)
+
+  }
 }

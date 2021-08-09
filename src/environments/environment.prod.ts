@@ -4,5 +4,5 @@ export const environment = {
   nome: '',
   id: 0,
   foto: '',
-  urlBackEnd: 'http://localhost:8080/'
+  urlBackEnd: 'https://viniciuspacheco.herokuapp.com/'
 };

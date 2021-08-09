@@ -33,6 +33,8 @@ export class InicioComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    window.scroll(0,0)
+    
     if(environment.token == '') {
       alert('Sua seção expirou, faça o login novamente!')
       this.router.navigate(['/entrar'])
@@ -55,7 +57,7 @@ export class InicioComponent implements OnInit {
   }
 
   getAllPostagens () {
-    this.postagemService.getAllPortagens().subscribe((resp: PostagemModel[])=>{
+    this.postagemService.getAllPostagens().subscribe((resp: PostagemModel[])=>{
       this.listaPostagens = resp
     })
   }
