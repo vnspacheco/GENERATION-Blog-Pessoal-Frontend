@@ -2,6 +2,7 @@ import { AuthService } from './../service/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { UsuarioModel } from '../model/UsuarioModel';
 import { Router } from '@angular/router';
+import { AlertasService } from '../service/alertas.service';
 
 @Component({
   selector: 'app-cadastrar',
@@ -16,7 +17,8 @@ export class CadastrarComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private alertas: AlertasService
     ) { }
 
   ngOnInit() {
@@ -35,13 +37,13 @@ export class CadastrarComponent implements OnInit {
     this.usuario.tipo = this.tipoDeUsuario1
 
     if (this.usuario.senha != this.confirmarSenha1) {
-      alert('As senhas estão diferentes.')
+      this.alertas.showAlertDanger('As senhas estão diferentes.')
     }
     else {
       this.authService.cadastrar(this.usuario).subscribe((resp: UsuarioModel) => {
       this.usuario = resp
       this.router.navigate(['/entrar'])
-      alert('Usuário cadastrado com sucesso!')
+      this.alertas.showAlertSuccess('Usuário cadastrado com sucesso!')
       })
     }
   }
