@@ -40,6 +40,15 @@ export class AuthService {
 
   alterar(user: UsuarioModel): Observable<UsuarioModel>{
     return this.http.put<UsuarioModel>(environment.urlBackEnd + 'usuarios/alterar', user)
+  }
 
+  adm () {
+    let ok: boolean = false
+
+    if (environment.tipo == 'adm') {
+      ok = true
+    }
+
+    return ok
   }
 }
