@@ -23,6 +23,10 @@ export class TemaService {
     return this.http.get<TemaModel>(environment.urlBackEnd +`tema/${id}`, this.token)
   }
 
+  getByNomeTema (descricao: string): Observable<TemaModel[]> {
+    return this.http.get<TemaModel[]>(environment.urlBackEnd +`tema/descricao/${descricao}`, this.token)
+  }
+
   postTema (tema: TemaModel): Observable<TemaModel> {
     return this.http.post<TemaModel>(environment.urlBackEnd +'tema', tema, this.token)
   }

@@ -1,4 +1,4 @@
-import { PostagemModel } from './../model/PostagemModel';
+import { PostagemModel } from 'src/app/model/PostagemModel';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -21,6 +21,10 @@ export class PostagemService {
 
   getByIdPostagem (id: number): Observable<PostagemModel> {
     return this.http.get<PostagemModel>(environment.urlBackEnd +`postagem/${id}`, this.token)
+  }
+
+  getByTituloPostagem (titulo: string): Observable<PostagemModel[]> {
+    return this.http.get<PostagemModel[]>(environment.urlBackEnd +`postagem/titulo/${titulo}`, this.token)
   }
 
   postPostagem (postagem: PostagemModel): Observable<PostagemModel> {
